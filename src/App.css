@@ -1,0 +1,76 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f9fafc;
+}
+
+.board-container {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+  background-color: #8e44ad; /* Purple background similar to Trello image */
+}
+
+.boards {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 170px); /* Adjusted to make room for board switcher */
+  padding-bottom: 20px;
+}
+
+.add-board {
+  min-width: 272px;
+  height: fit-content;
+  background-color: rgba(255, 255, 255, 0.24);
+  border-radius: 3px;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.add-board:hover {
+  background-color: rgba(255, 255, 255, 0.32);
+}
+
+.add-board-form {
+  min-width: 272px;
+  background-color: #ebecf0;
+  border-radius: 3px;
+  padding: 10px;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+}
+
+.add-board-form input {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #0079bf;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.add-board-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.add-board-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-board-actions button:first-child {
+  background-color: #0079bf;
+  color: white;
+}
+
+.add-board-actions button:last-child {
+  background-color: rgba(9, 30, 66, 0.04);
+  color: #172b4d;
+}

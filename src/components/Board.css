@@ -1,0 +1,150 @@
+.board {
+  min-width: 272px;
+  max-width: 272px;
+  background-color: #ebecf0;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  margin-bottom: 8px;
+}
+
+.board-header {
+  padding: 10px 8px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #172b4d;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+.board-header h3:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+  cursor: pointer;
+}
+
+.board-menu-container {
+  position: relative;
+}
+
+.board-menu-button {
+  background: none;
+  border: none;
+  padding: 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #6b778c;
+  font-weight: bold;
+}
+
+.board-menu-button:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+  color: #172b4d;
+}
+
+.board-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+  width: 200px;
+  z-index: 10;
+}
+
+.board-menu-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #172b4d;
+}
+
+.board-menu-item:hover {
+  background-color: rgba(9, 30, 66, 0.04);
+}
+
+.cards-container {
+  padding: 0 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.add-card {
+  padding: 8px;
+  color: #5e6c84;
+  cursor: pointer;
+  margin-top: 2px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.add-card:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+  color: #172b4d;
+}
+
+.add-card-form {
+  padding: 0 8px 8px;
+}
+
+.add-card-form textarea {
+  width: 100%;
+  resize: none;
+  border: none;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.card-title-input {
+  height: 36px;
+}
+
+.card-description-input {
+  height: 60px;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  resize: none;
+  min-height: 54px;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+.add-card-form textarea:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #0079bf;
+}
+
+.add-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.add-card-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-card-actions button:first-child {
+  background-color: #0079bf;
+  color: white;
+}
+
+.add-card-actions button:last-child {
+  background-color: rgba(9, 30, 66, 0.04);
+  color: #172b4d;
+}

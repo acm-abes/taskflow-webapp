@@ -1,0 +1,408 @@
+.card {
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  padding: 8px 8px 8px 32px; /* Added left padding for radio button */
+  margin-bottom: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.15s, background-color 0.15s;
+}
+
+.card:hover {
+  box-shadow: 0 2px 4px rgba(9, 30, 66, 0.25);
+}
+
+.card-completed {
+  background-color: rgba(9, 30, 66, 0.04);
+}
+
+.card-completed .card-title {
+  text-decoration: line-through;
+  color: #5e6c84;
+}
+
+.card-radio-container {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.card:hover .card-radio-container {
+  opacity: 1;
+}
+
+.card-radio {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.card-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: white;
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.label-frontend {
+  background-color: #61bd4f;
+}
+
+.label-important {
+  background-color: #eb5a46;
+}
+
+.label-project {
+  background-color: #0079bf;
+}
+
+.label-design {
+  background-color: #ff9f1a;
+}
+
+.label-setup {
+  background-color: #c377e0;
+}
+
+.card-content {
+  margin-right: 16px;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #172b4d;
+  word-wrap: break-word;
+}
+
+.card-description {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #5e6c84;
+  word-wrap: break-word;
+}
+
+
+
+.card-menu-container {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+.card-menu-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #6b778c;
+  font-weight: bold;
+  visibility: hidden;
+}
+
+.card:hover .card-menu-button {
+  visibility: visible;
+}
+
+.card-menu-button:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+  color: #172b4d;
+}
+
+.card-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+  width: 180px;
+  z-index: 10;
+}
+
+.card-menu-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #172b4d;
+}
+
+.card-menu-item:hover {
+  background-color: rgba(9, 30, 66, 0.04);
+}
+
+/* Activity styles */
+.card-deadline {
+  margin-top: 8px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.card-deadline-label {
+  font-weight: 600;
+  margin-right: 5px;
+  color: #5e6c84;
+}
+
+.card-deadline-date {
+  color: #172b4d;
+  padding: 2px 6px;
+  background-color: #f4f5f7;
+  border-radius: 3px;
+}
+
+.card-deadline-picker {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #f4f5f7;
+  border-radius: 3px;
+}
+
+.card-deadline-picker input[type="date"] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.card-deadline-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-deadline-actions button {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.card-deadline-actions button:first-child {
+  background-color: #0079bf;
+  color: white;
+}
+
+.card-deadline-actions button:last-child {
+  background-color: #ebecf0;
+  color: #172b4d;
+}
+
+.card-activities-summary {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #5e6c84;
+}
+
+.card-activities-toggle {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.card-activities {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.card-activities h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-activity-container {
+  margin-bottom: 10px;
+}
+
+.card-activity-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.card-activity-item input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.card-activity-item .completed {
+  text-decoration: line-through;
+  color: #5e6c84;
+}
+
+.activity-text {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex: 1;
+}
+
+.task-count {
+  margin-left: 6px;
+  font-size: 11px;
+  color: #5e6c84;
+}
+
+.expand-icon {
+  margin-left: 6px;
+  font-size: 10px;
+  color: #5e6c84;
+}
+
+.activity-tasks {
+  margin-left: 24px;
+  margin-top: 6px;
+  border-left: 2px solid #dfe1e6;
+  padding-left: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.task-item .completed {
+  text-decoration: line-through;
+  color: #5e6c84;
+}
+
+.add-task {
+  display: flex;
+  margin-top: 6px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+.add-task button {
+  padding: 4px 8px;
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.add-task button:disabled {
+  background-color: #b3d1e4;
+  cursor: not-allowed;
+}
+
+.card-add-activity {
+  margin-top: 10px;
+  display: flex;
+}
+
+.card-add-activity input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-right: 6px;
+  font-size: 13px;
+}
+
+.card-add-activity button {
+  padding: 6px 10px;
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.card-add-activity button:disabled {
+  background-color: #b3d1e4;
+  cursor: not-allowed;
+}
+
+/* Card Edit Form Styles */
+.card-edit-form {
+  padding: 4px 0;
+}
+
+.card-edit-title,
+.card-edit-description {
+  width: 100%;
+  resize: none;
+  border: none;
+  border-radius: 3px;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  box-shadow: inset 0 0 0 2px #0079bf;
+}
+
+.card-edit-title {
+  height: 36px;
+  font-weight: 600;
+}
+
+.card-edit-description {
+  height: 60px;
+}
+
+.card-edit-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-edit-save,
+.card-edit-cancel {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.card-edit-save {
+  background-color: #0079bf;
+  color: white;
+}
+
+.card-edit-save:hover {
+  background-color: #026aa7;
+}
+
+.card-edit-cancel {
+  background-color: rgba(9, 30, 66, 0.04);
+  color: #172b4d;
+}
+
+.card-edit-cancel:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+}
