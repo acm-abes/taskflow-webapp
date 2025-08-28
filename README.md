@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Trello Clone
 
 A Trello-like task management application built with React. This application allows users to create boards, add cards, and drag-and-drop cards between different lists.
