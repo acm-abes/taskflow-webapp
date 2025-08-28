@@ -59,24 +59,28 @@
   margin-bottom: 4px;
 }
 
-.label-frontend {
+.label-green {
   background-color: #61bd4f;
 }
 
-.label-important {
-  background-color: #eb5a46;
+.label-yellow {
+  background-color: #f2d600;
 }
 
-.label-project {
-  background-color: #0079bf;
-}
-
-.label-design {
+.label-orange {
   background-color: #ff9f1a;
 }
 
-.label-setup {
+.label-red {
+  background-color: #eb5a46;
+}
+
+.label-purple {
   background-color: #c377e0;
+}
+
+.label-blue {
+  background-color: #0079bf;
 }
 
 .card-content {
@@ -133,6 +137,112 @@
   box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
   width: 180px;
   z-index: 10;
+}
+
+.card-color-picker {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25);
+  width: 200px;
+  z-index: 10;
+  padding: 12px;
+}
+
+.card-custom-label-input {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+  width: 250px;
+  z-index: 10;
+  padding: 12px;
+}
+
+.card-custom-label-input h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #172b4d;
+}
+
+.card-custom-label-input input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #dfe1e6;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.custom-label-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.custom-label-actions button {
+  padding: 6px 12px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.custom-label-actions button:first-child {
+  background-color: #0079bf;
+  color: white;
+}
+
+.custom-label-actions button:last-child {
+  background-color: #ebecf0;
+  color: #172b4d;
+}
+
+.card-color-picker h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #172b4d;
+}
+
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.color-option {
+  height: 32px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.close-color-picker {
+  width: 100%;
+  padding: 6px;
+  background-color: rgba(9, 30, 66, 0.04);
+  border: none;
+  border-radius: 3px;
+  color: #172b4d;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.close-color-picker:hover {
+  background-color: rgba(9, 30, 66, 0.08);
 }
 
 .card-menu-item {

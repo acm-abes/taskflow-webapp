@@ -10,7 +10,9 @@
   border-top: 1px solid #dfe1e6;
 }
 
-.board-switcher-container {
+
+
+.board-options {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -49,17 +51,29 @@
   background-color: rgba(9, 30, 66, 0.08);
 }
 
+
+
 .board-option.active {
   background-color: rgba(9, 30, 66, 0.04);
   color: #0052cc;
+  font-weight: 600;
 }
 
 .board-option.active .board-icon {
   color: #0052cc;
 }
 
-.switch-boards {
+.switch-board {
   border-left: 1px solid #dfe1e6;
   padding-left: 16px;
   margin-left: 6px;
+  color: #0079bf;
+}
+
+.switch-board .board-icon {
+  color: #0079bf;
+}
+
+.switch-board:hover {
+  background-color: rgba(0, 121, 191, 0.08);
 }

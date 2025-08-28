@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
 import './BoardSwitcher.css';
 
-function BoardSwitcher({ onBoardSwitch }) {
-  const [activeBoard, setActiveBoard] = useState('my-board');
-  
+const BoardSwitcher = ({ onBoardSwitch }) => {
+  // Define available boards
   const boards = [
-    { 
-      id: 'my-board', 
-      name: 'Board',
+    {
+      id: 'my-board',
+      name: 'My Board',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-          <path d="M8.5 15h2v2h-2zm0-8h2v6h-2zm5 0h2v2h-2zm0 4h2v4h-2z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="9" y1="21" x2="9" y2="9"></line>
         </svg>
-      ) 
+      )
     },
-    { 
-      id: 'planner', 
+    {
+      id: 'planner',
       name: 'Planner',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM5 5v2h14V5H5z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
-      ) 
+      )
     },
-    { 
-      id: 'inbox', 
+    {
+      id: 'inbox',
       name: 'Inbox',
       icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5v-3h3.56c.69 1.19 1.97 2 3.45 2s2.75-.81 3.45-2H19v3zm0-5h-4.99c0 1.1-.9 2-2 2s-2-.9-2-2H5V5h14v9z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+          <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
         </svg>
-      ) 
+      )
     }
   ];
+
+  const [activeBoard, setActiveBoard] = useState('my-board');
 
   const handleBoardSwitch = (boardId) => {
     setActiveBoard(boardId);
@@ -44,9 +50,9 @@ function BoardSwitcher({ onBoardSwitch }) {
 
   return (
     <div className="board-switcher">
-      <div className="board-switcher-container">
-        {boards.map(board => (
-          <div 
+      <div className="board-options">
+        {boards.map((board) => (
+          <div
             key={board.id}
             className={`board-option ${activeBoard === board.id ? 'active' : ''}`}
             onClick={() => handleBoardSwitch(board.id)}
@@ -55,17 +61,22 @@ function BoardSwitcher({ onBoardSwitch }) {
             <div className="board-name">{board.name}</div>
           </div>
         ))}
-        <div className="board-option switch-boards">
+        <div
+          className="board-option switch-board"
+          onClick={() => handleBoardSwitch('my-board')}
+        >
           <div className="board-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 0 0-9-9 9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9z"></path>
+              <path d="M9 17l6-10"></path>
+              <path d="M9 7l6 10"></path>
             </svg>
           </div>
-          <div className="board-name">Switch boards</div>
+          <div className="board-name">Switch Board</div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default BoardSwitcher;

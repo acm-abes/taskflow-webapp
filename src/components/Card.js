@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import './Card.css';
 
-function Card({ card, index, boardId, deleteCard, updateCard, toggleCardCompleted, toggleActivityCompleted, addCardActivity, updateCardDeadline, toggleTaskCompleted, addActivityTask }) {
+function Card({ card, index, boardId, deleteCard, updateCard, toggleCardCompleted, toggleActivityCompleted, addCardActivity, updateCardDeadline, toggleTaskCompleted, addActivityTask, addCardLabel }) {
   const [showCardMenu, setShowCardMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(card.title);
@@ -13,6 +13,48 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
   const [newTasks, setNewTasks] = useState({});
   const [showDeadlinePicker, setShowDeadlinePicker] = useState(false);
   const [selectedDeadline, setSelectedDeadline] = useState(card.deadline || '');
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  
+  // Predefined colors for labels
+  const colorOptions = [
+    { name: 'green', color: '#61bd4f', id: 'green' },
+    { name: 'Yellow', color: '#f2d600', id: 'yellow' },
+    { name: 'Orange', color: '#ff9f1a', id: 'orange' },
+    { name: 'important', color: '#eb5a46', id: 'important' },
+    { name: 'Purple', color: '#c377e0', id: 'purple' },
+    { name: 'Blue', color: '#0079bf', id: 'blue' }
+  ];
+  
+  // State for custom label text
+  const [customLabelText, setCustomLabelText] = useState('');
+  const [selectedColorId, setSelectedColorId] = useState('');
+  const [showCustomTextInput, setShowCustomTextInput] = useState(false);
+
+  // Function to add a color label to the card
+  const handleAddLabel = (colorId, customText = '') => {
+    // Check if the label already exists to avoid duplicates
+    if (!card.labels.includes(colorId)) {
+      // If custom text is provided, use it instead of the default color name
+      const labelData = customText ? { id: colorId, text: customText } : colorId;
+      addCardLabel(boardId, card.id, labelData);
+    }
+    setShowColorPicker(false);
+    setShowCustomTextInput(false);
+    setCustomLabelText('');
+  };
+
+  // Function to handle color selection and show custom text input
+  const handleColorSelect = (colorId) => {
+    setSelectedColorId(colorId);
+    setShowCustomTextInput(true);
+  };
+
+  // Function to submit custom label
+  const handleCustomLabelSubmit = () => {
+    if (selectedColorId) {
+      handleAddLabel(selectedColorId, customLabelText.trim() || colorOptions.find(opt => opt.id === selectedColorId).name);
+    }
+  };
 
   return (
     <Draggable draggableId={card.id} index={index}>
@@ -35,11 +77,48 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
             />
           </div>
           <div className="card-labels">
-            {card.labels.map((label, i) => (
-              <span key={i} className={`card-label label-${label.toLowerCase()}`}>
-                {label}
-              </span>
-            ))}
+            {card.labels && card.labels.map((label, i) => {
+              // Check if the label is an object with id and text properties
+              if (label && typeof label === 'object' && label.id) {
+                const colorOption = colorOptions.find(opt => opt.id === label.id);
+                if (colorOption) {
+                  return (
+                    <span 
+                      key={i} 
+                      className={`card-label`}
+                      style={{ backgroundColor: colorOption.color }}
+                    >
+                      {label.text || colorOption.name}
+                    </span>
+                  );
+                }
+                // Return null if no matching color option found
+                return null;
+              } 
+              // Check if the label is one of our color IDs (string)
+              else {
+                const colorOption = colorOptions.find(opt => opt.id === label);
+                if (colorOption) {
+                  // If it's a color ID, use the color from our options
+                  return (
+                    <span 
+                      key={i} 
+                      className={`card-label`}
+                      style={{ backgroundColor: colorOption.color }}
+                    >
+                      {colorOption.name}
+                    </span>
+                  );
+                } else {
+                  // Otherwise, use the existing label format
+                  return (
+                    <span key={i} className={`card-label label-${label.toLowerCase()}`}>
+                      {label}
+                    </span>
+                  );
+                }
+              }
+            })}
           </div>
           {isEditing ? (
             <div className="card-edit-form">
@@ -132,7 +211,7 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                 </div>
               )}
               
-              {showActivities && (
+              {showActivities && card.activities && card.activities.length > 0 && (
                 <div className="card-activities">
                   <h4>Activities</h4>
                   {card.activities.map(activity => (
@@ -154,7 +233,7 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                         >
                           {activity.text}
                           <span className="task-count">
-                            ({activity.tasks.filter(t => t.completed).length}/{activity.tasks.length})
+                            ({activity.tasks && activity.tasks.length > 0 ? activity.tasks.filter(t => t.completed).length : 0}/{activity.tasks ? activity.tasks.length : 0})
                           </span>
                           <span className="expand-icon">
                             {expandedActivities[activity.id] ? '▼' : '►'}
@@ -164,7 +243,7 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                       
                       {expandedActivities[activity.id] && (
                         <div className="activity-tasks">
-                          {activity.tasks.map(task => (
+                          {activity.tasks && activity.tasks.length > 0 ? activity.tasks.map(task => (
                             <div key={task.id} className="task-item">
                               <input 
                                 type="checkbox" 
@@ -173,7 +252,7 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                               />
                               <span className={task.completed ? 'completed' : ''}>{task.text}</span>
                             </div>
-                          ))}
+                          )) : <div>No tasks available</div>}
                           
                           <div className="add-task">
                             <input 
@@ -225,6 +304,66 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
               )}
             </div>
           )}
+          {showColorPicker && (
+            <div className="card-color-picker">
+              <h4>Select a color</h4>
+              <div className="color-options">
+                {colorOptions.map((option) => (
+                  <div 
+                    key={option.id}
+                    className="color-option"
+                    style={{ backgroundColor: option.color }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleColorSelect(option.id);
+                    }}
+                  >
+                    <span className="color-name">{option.name}</span>
+                  </div>
+                ))}
+              </div>
+              <button 
+                className="close-color-picker"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowColorPicker(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+          
+          {showCustomTextInput && (
+            <div className="card-custom-label-input">
+              <h4>Enter custom label text</h4>
+              <input
+                type="text"
+                value={customLabelText}
+                onChange={(e) => setCustomLabelText(e.target.value)}
+                placeholder="Enter custom text (optional)"
+                autoFocus
+              />
+              <div className="custom-label-actions">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCustomLabelSubmit();
+                  }}
+                >
+                  Add Label
+                </button>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowCustomTextInput(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
           <div className="card-menu-container">
             <button 
               className="card-menu-button" 
@@ -254,7 +393,24 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                   className="card-menu-item" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    setShowActivities(!showActivities);
+                    setShowColorPicker(true);
+                    setShowCardMenu(false);
+                  }}
+                >
+                  Add color label
+                </div>
+
+                <div 
+                  className="card-menu-item" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    // Only toggle if activities exist
+                    if (card.activities && card.activities.length > 0) {
+                      setShowActivities(!showActivities);
+                    } else {
+                      // Show a message or handle the case when no activities exist
+                      alert('No activities available for this card.');
+                    }
                     setShowCardMenu(false);
                   }}
                 >
@@ -265,7 +421,7 @@ function Card({ card, index, boardId, deleteCard, updateCard, toggleCardComplete
                   className="card-menu-item" 
                   onClick={(e) => {
                     e.stopPropagation();
-                    setShowDeadlinePicker(!showDeadlinePicker);
+                    setShowDeadlinePicker(true);
                     setShowCardMenu(false);
                   }}
                 >

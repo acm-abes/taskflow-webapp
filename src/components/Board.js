@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
 import './Board.css';
 
-function Board({ board, addNewCard, deleteCard, deleteBoard, updateCard, toggleCardCompleted, toggleActivityCompleted, addCardActivity, updateCardDeadline, toggleTaskCompleted, addActivityTask }) {
+function Board({ board, addNewCard, deleteCard, deleteBoard, updateCard, toggleCardCompleted, toggleActivityCompleted, addCardActivity, updateCardDeadline, toggleTaskCompleted, addActivityTask, addCardLabel }) {
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
@@ -62,6 +62,7 @@ function Board({ board, addNewCard, deleteCard, deleteBoard, updateCard, toggleC
                   updateCardDeadline={updateCardDeadline}
                   toggleTaskCompleted={toggleTaskCompleted}
                   addActivityTask={addActivityTask}
+                  addCardLabel={addCardLabel}
                 />
             ))}
             {provided.placeholder}

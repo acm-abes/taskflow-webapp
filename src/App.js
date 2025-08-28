@@ -5,12 +5,13 @@ import './App.css';
 import Board from './components/Board';
 import Navbar from './components/Navbar';
 import BoardSwitcher from './components/BoardSwitcher';
+import SimpleCalendar from './components/SimpleCalendar';
 
 function App() {
 
 
-  // Define multiple board sets
-  const boardSets = {
+  // Define initial board sets
+  const initialBoardSets = {
     'my-board': [
       {
         id: uuidv4(),
@@ -211,13 +212,18 @@ function App() {
       }
     ]
   };
+  
+  // State to manage board sets
+  const [boardSets] = useState(initialBoardSets);
 
   const [currentBoardSet, setCurrentBoardSet] = useState('my-board');
   const [boards, setBoards] = useState(boardSets[currentBoardSet]);
 
   const handleBoardSwitch = (boardId) => {
-    setCurrentBoardSet(boardId);
-    setBoards(boardSets[boardId]);
+    if (boardSets[boardId]) {
+      setCurrentBoardSet(boardId);
+      setBoards(boardSets[boardId]);
+    }
   };
 
   const [isAddBoardOpen, setIsAddBoardOpen] = useState(false);
@@ -491,6 +497,50 @@ function App() {
     boardSets[currentBoardSet] = updatedBoards;
   };
 
+  const addCardLabel = (boardId, cardId, labelData) => {
+    const updatedBoards = boards.map(board => {
+      if (board.id === boardId) {
+        return {
+          ...board,
+          cards: board.cards.map(card => {
+            if (card.id === cardId) {
+              // Check if labelData is an object with id and text properties
+              if (typeof labelData === 'object' && labelData.id) {
+                // Check if a label with this id already exists
+                const labelExists = card.labels.some(label => 
+                  (typeof label === 'object' && label.id === labelData.id) || 
+                  label === labelData.id
+                );
+                
+                if (!labelExists) {
+                  return {
+                    ...card,
+                    labels: [...card.labels, labelData]
+                  };
+                }
+              } else {
+                // Handle the old format (just color ID as string)
+                if (!card.labels.includes(labelData)) {
+                  return {
+                    ...card,
+                    labels: [...card.labels, labelData]
+                  };
+                }
+              }
+            }
+            return card;
+          })
+        };
+      }
+      return board;
+    });
+
+    setBoards(updatedBoards);
+    
+    // Update the boardSets with the updated card
+    boardSets[currentBoardSet] = updatedBoards;
+  };
+
   const addActivityTask = (boardId, cardId, activityId, taskText) => {
     if (!taskText.trim()) return;
     
@@ -572,46 +622,53 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="board-container">
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <div className="boards">
-            {boards.map(board => (
-              <Board 
-                key={board.id} 
-                board={board} 
-                addNewCard={addNewCard}
-                deleteCard={deleteCard}
-                deleteBoard={deleteBoard}
-                updateCard={updateCard}
-                toggleCardCompleted={toggleCardCompleted}
-                toggleActivityCompleted={toggleActivityCompleted}
-                addCardActivity={addCardActivity}
-                updateCardDeadline={updateCardDeadline}
-                toggleTaskCompleted={toggleTaskCompleted}
-                addActivityTask={addActivityTask}
-              />
-            ))}
-            
-            {isAddBoardOpen ? (
-              <div className="add-board-form">
-                <input
-                  type="text"
-                  value={newBoardTitle}
-                  onChange={(e) => setNewBoardTitle(e.target.value)}
-                  placeholder="Enter board title"
-                  autoFocus
-                />
-                <div className="add-board-actions">
-                  <button onClick={addNewBoard}>Add Board</button>
-                  <button onClick={() => setIsAddBoardOpen(false)}>Cancel</button>
-                </div>
-              </div>
-            ) : (
-              <div className="add-board" onClick={() => setIsAddBoardOpen(true)}>
-                <span>+ Add another list</span>
-              </div>
-            )}
+        {currentBoardSet === 'planner' ? (
+          <div className="calendar-wrapper">
+            <SimpleCalendar />
           </div>
-        </DragDropContext>
+        ) : (
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <div className="boards">
+              {boards.map(board => (
+                <Board 
+                  key={board.id} 
+                  board={board} 
+                  addNewCard={addNewCard}
+                  deleteCard={deleteCard}
+                  deleteBoard={deleteBoard}
+                  updateCard={updateCard}
+                  toggleCardCompleted={toggleCardCompleted}
+                  toggleActivityCompleted={toggleActivityCompleted}
+                  addCardActivity={addCardActivity}
+                  updateCardDeadline={updateCardDeadline}
+                  toggleTaskCompleted={toggleTaskCompleted}
+                  addActivityTask={addActivityTask}
+                  addCardLabel={addCardLabel}
+                />
+              ))}
+              
+              {isAddBoardOpen ? (
+                <div className="add-board-form">
+                  <input
+                    type="text"
+                    value={newBoardTitle}
+                    onChange={(e) => setNewBoardTitle(e.target.value)}
+                    placeholder="Enter board title"
+                    autoFocus
+                  />
+                  <div className="add-board-actions">
+                    <button onClick={addNewBoard}>Add Board</button>
+                    <button onClick={() => setIsAddBoardOpen(false)}>Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <div className="add-board" onClick={() => setIsAddBoardOpen(true)}>
+                  <span>+ Add another list</span>
+                </div>
+              )}
+            </div>
+          </DragDropContext>
+        )}
       </div>
       <BoardSwitcher onBoardSwitch={handleBoardSwitch} />
     </div>
